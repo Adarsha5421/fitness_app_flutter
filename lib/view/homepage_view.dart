@@ -5,7 +5,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dashboard"),
+        title: const Text("Sweat"),
         backgroundColor: Colors.red,
       ),
       body: const Padding(
@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-     ),
-);
-}
+      ),
+    );
+  }
 }
