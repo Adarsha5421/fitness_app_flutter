@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         Text("Total Workouts",
                             style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text("45"),
+                        Text("123"),
                       ],
                     ),
                     Icon(Icons.fitness_center, size: 40),
