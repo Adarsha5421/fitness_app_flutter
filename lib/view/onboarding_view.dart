@@ -20,7 +20,7 @@ class OnboardingScreen extends StatelessWidget {
             ),
             OnboardingPage(
               imagePath: 'assets/logo/gym_logo.png',
-              title: "Set Your Goals",
+              title: "Set Your Goals Here!",
               description:
                   "Define fitness goals and achieve them step by step.",
             ),
@@ -66,7 +66,7 @@ class OnboardingPage extends StatelessWidget {
             style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(224, 225, 75, 0)),
+                color: Color.fromARGB(223, 214, 89, 27)),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -141,7 +141,7 @@ class OnboardingNavigation extends StatelessWidget {
             ),
           ),
         ],
-     ),
-);
-}
+      ),
+    );
+  }
 }
