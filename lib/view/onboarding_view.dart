@@ -141,7 +141,7 @@ class OnboardingNavigation extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
+     ),
+);
+}
 }
