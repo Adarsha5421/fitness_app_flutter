@@ -30,14 +30,14 @@ class _MyDashboardViewState extends State<MyDashboardView> {
           title: const Text(
             'Dashboard',
           ),
-          backgroundColor: Colors.pink,
+          backgroundColor: const Color.fromARGB(255, 255, 55, 0),
           centerTitle: true,
         ),
         body: lstBOttomScreen[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.white,
-          backgroundColor: Colors.pink,
+          backgroundColor: const Color.fromARGB(255, 255, 55, 0),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),

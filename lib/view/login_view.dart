@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -92,7 +94,7 @@ class _LoginPageState extends State<LoginPage>
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 255, 55, 00),
+                              color: Color.fromARGB(255, 255, 55, 0),
                             ),
                           ),
                         ),
@@ -176,8 +178,7 @@ class _LoginPageState extends State<LoginPage>
                                     Navigator.pushNamed(context, '/signup'),
                                 child: const Text('Sign Up',
                                     style: TextStyle(
-                                      color:
-                                          const Color.fromARGB(255, 255, 55, 0),
+                                      color: Color.fromARGB(255, 255, 55, 0),
                                     )),
                               ),
                             ],
@@ -191,7 +192,7 @@ class _LoginPageState extends State<LoginPage>
             ),
           ),
         ],
-     ),
-);
-}
+      ),
+    );
+  }
 }
