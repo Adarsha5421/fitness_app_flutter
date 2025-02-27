@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gym_tracker_app/core/navigation_services.dart';
+import 'package:gym_tracker_app/features/onboarding/presentation/pages/onboarding_screen.dart';
+import 'package:gym_tracker_app/view/onboarding_view.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/onboarding');
+      // Navigator.pushReplacementNamed(context, OnboardingScreen());
+      navigateAndPushReplacement(context: context, screen: const OnboardingScreen());
     });
 
     return Scaffold(
@@ -31,7 +35,7 @@ class SplashScreen extends StatelessWidget {
             ],
           ),
         ),
-     ),
-);
-}
+      ),
+    );
+  }
 }

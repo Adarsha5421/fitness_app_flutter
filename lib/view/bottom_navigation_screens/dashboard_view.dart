@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gym_tracker_app/features/home/presentation/pages/home_screen.dart';
+import 'package:gym_tracker_app/features/workout/presentation/pages/work_out_screen.dart';
 import 'package:gym_tracker_app/view/bottom_navigation_screens/group_view.dart';
 import 'package:gym_tracker_app/view/bottom_navigation_screens/notification_view.dart';
 import 'package:gym_tracker_app/view/bottom_navigation_screens/profile_view.dart';
-import 'package:gym_tracker_app/view/bottom_navigation_screens/workout_view.dart';
-import 'package:gym_tracker_app/view/homepage_view.dart';
 
 class MyDashboardView extends StatefulWidget {
   const MyDashboardView({super.key});
@@ -15,8 +15,8 @@ class MyDashboardView extends StatefulWidget {
 class _MyDashboardViewState extends State<MyDashboardView> {
   int _selectedIndex = 0;
   List<Widget> lstBOttomScreen = [
-    const HomePage(),
-    const GymScreen(),
+    const HomeScreen(), // const HomePage(),
+    const WorkOutScreen(), // const GymScreen(),
     const GroupScreen(),
     const ProfileScreen(),
     const NotificationScreen(),

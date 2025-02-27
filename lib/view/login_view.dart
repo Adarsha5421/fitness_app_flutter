@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gym_tracker_app/core/navigation_services.dart';
+import 'package:gym_tracker_app/features/dashboard/presentation/pages/dashboad_screen.dart';
+import 'package:gym_tracker_app/features/home/presentation/pages/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -7,8 +10,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _logoAnimation;
@@ -54,10 +56,7 @@ class _LoginPageState extends State<LoginPage>
             curve: Curves.easeInOut,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 10, 10, 10),
-                  Color.fromARGB(255, 17, 17, 17)
-                ],
+                colors: [Color.fromARGB(255, 10, 10, 10), Color.fromARGB(255, 17, 17, 17)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -153,12 +152,12 @@ class _LoginPageState extends State<LoginPage>
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 255, 55, 0),
+                              backgroundColor: const Color.fromARGB(255, 255, 55, 0),
                               foregroundColor: Colors.white,
                             ),
-                            onPressed: () => Navigator.pushReplacementNamed(
-                                context, '/home'),
+                            onPressed: () => navigateTo(context: context, screen: const MyDashboardScreen()),
+                            // onPressed: () => Navigator.pushReplacementNamed(
+                            //     context, '/home'),
                             child: const Text(
                               'Log In',
                               style: TextStyle(fontSize: 16),
@@ -174,8 +173,7 @@ class _LoginPageState extends State<LoginPage>
                             children: [
                               const Text("Don't have an account?"),
                               TextButton(
-                                onPressed: () =>
-                                    Navigator.pushNamed(context, '/signup'),
+                                onPressed: () => Navigator.pushNamed(context, '/signup'),
                                 child: const Text('Sign Up',
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 255, 55, 0),
