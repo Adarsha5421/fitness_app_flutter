@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -82,7 +84,7 @@ class _SignupPageState extends State<SignupPage>
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 255, 55, 0),
+                          color: Color.fromARGB(255, 255, 55, 0),
                         ),
                       ),
                       const SizedBox(height: 20),

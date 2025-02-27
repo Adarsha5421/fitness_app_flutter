@@ -7,11 +7,11 @@ import 'package:gym_tracker_app/view/signup_view.dart';
 import 'package:gym_tracker_app/view/splash_screen_view.dart';
 
 void main() {
-  runApp(const GymTrackerApp());
+  runApp(const MyApp());
 }
 
-class GymTrackerApp extends StatelessWidget {
-  const GymTrackerApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class GymTrackerApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/onboarding': (context) => OnboardingScreen(),
         '/signup': (context) => SignupPage(),
-        '/login': (context) => LoginPage(),
+        '/login': (context) => const LoginPage(),
         '/home': (context) => const MyDashboardView(),
       },
     );

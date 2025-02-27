@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    PageController _controller = PageController();
+    PageController controller = PageController();
 
     return Scaffold(
       body: Container(
         color: Colors.black,
         child: PageView(
-          controller: _controller,
+          controller: controller,
           children: const [
             OnboardingPage(
               imagePath: 'assets/logo/gym_logo.png',
@@ -33,7 +35,7 @@ class OnboardingScreen extends StatelessWidget {
         ),
       ),
       bottomSheet: OnboardingNavigation(
-        controller: _controller,
+        controller: controller,
         totalPages: 3,
         onDone: () => Navigator.pushReplacementNamed(context, '/signup'),
       ),
@@ -46,7 +48,7 @@ class OnboardingPage extends StatelessWidget {
   final String title;
   final String description;
 
-  const OnboardingPage({
+  const OnboardingPage({super.key, 
     required this.imagePath,
     required this.title,
     required this.description,
