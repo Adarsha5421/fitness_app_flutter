@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:gym_tracker_app/core/api_endpoints.dart';
 import 'package:gym_tracker_app/features/Login/data/models/login_modal.dart';
-import 'package:gym_tracker_app/features/Login/domain/entities/login_entity.dart';
 
 class UserRemoteDataSource {
   final Dio dio;
@@ -27,7 +24,7 @@ class UserRemoteDataSource {
   Future<LoginModal> login(String email, String password) async {
     try {
       Response response = await dio.post(APIEndPoints.loginUrl, data: {'email': email, 'password': password});
-      if (response.statusCode == 400) throw Exception(response.data['error']);
+      if (response.statusCode == 400 || response.statusCode == 401) throw Exception(response.data['error']);
       final responseData = response.data;
       return LoginModal.fromJson(responseData);
     } on DioException catch (e) {
