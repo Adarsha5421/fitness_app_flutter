@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 showMySnackBar(
   BuildContext context,
-  String message, {
+  {required String message, 
   Color? color,
 }) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
