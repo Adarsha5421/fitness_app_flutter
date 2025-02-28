@@ -13,10 +13,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   late AnimationController _controller;
   late Animation<Offset> _logoAnimation;
+  bool _isPasswordVisible = false;
 
   @override
   void initState() {
@@ -41,7 +43,32 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _controller.dispose();
     super.dispose();
+  }
+
+  // Email validation
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+    // Regular expression for email validation
+    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  // Password validation
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+    return null;
   }
 
   @override
@@ -81,94 +108,133 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     child: Padding(
                       padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Title
-                          const Text(
-                            'Welcome Back',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 255, 55, 0),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          // Email Input
-                          TextField(
-                            controller: _emailController,
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              prefixIcon: const Icon(
-                                Icons.email,
+                      child: Form(
+                        key: _formKey,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Title
+                            const Text(
+                              'Welcome Back',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 255, 55, 0),
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
+                            ),
+                            const SizedBox(height: 20),
+                            // Email Input with validation
+                            TextFormField(
+                              controller: _emailController,
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon: const Icon(
+                                  Icons.email,
+                                  color: Color.fromARGB(255, 255, 55, 0),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                errorStyle: const TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                              validator: _validateEmail,
+                            ),
+                            const SizedBox(height: 16),
+                            // Password Input with validation
+                            TextFormField(
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                prefixIcon: const Icon(
+                                  Icons.lock,
+                                  color: Color.fromARGB(255, 255, 55, 0),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordVisible = !_isPasswordVisible;
+                                    });
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                errorStyle: const TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                              obscureText: !_isPasswordVisible,
+                              validator: _validatePassword,
+                            ),
+                            const SizedBox(height: 24),
+                            // Login Button
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 40,
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                backgroundColor: const Color.fromARGB(255, 255, 55, 0),
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<LoginCubit>().loginFx(
+                                        context,
+                                        email: _emailController.text,
+                                        password: _passwordController.text,
+                                      );
+                                  // Uncomment when ready to implement:
+                                  // navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
+                                }
+                              },
+                              child: const Text(
+                                'Log In',
+                                style: TextStyle(fontSize: 16),
                               ),
                             ),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          const SizedBox(height: 16),
-                          // Password Input
-                          TextField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              prefixIcon: const Icon(
-                                Icons.lock,
-                                color: Color.fromARGB(255, 255, 55, 0),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                            const SizedBox(height: 16),
+                            // Error message from state
+                            // if (state is LoginFailureState)
+                            // Padding(
+                            //   padding: const EdgeInsets.only(top: 8.0),
+                            //   child: Text(
+                            //     state.errorMessage,
+                            //     style: const TextStyle(
+                            //       color: Colors.red,
+                            //       fontSize: 14,
+                            //     ),
+                            //     textAlign: TextAlign.center,
+                            //   ),
+                            // ),
+                            const SizedBox(height: 16),
+                            // Signup Link
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Don't have an account?"),
+                                TextButton(
+                                  onPressed: () => navigateTo(context: context, screen: const SignupScreen()),
+                                  child: const Text('Sign Up',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 255, 55, 0),
+                                      )),
+                                ),
+                              ],
                             ),
-                            obscureText: true,
-                          ),
-                          const SizedBox(height: 24),
-                          // Login Button
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              backgroundColor: const Color.fromARGB(255, 255, 55, 0),
-                              foregroundColor: Colors.white,
-                            ),
-                            onPressed: () {
-                              context.read<LoginCubit>().loginFx(
-                                    context,
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                  );
-                              // Uncomment when ready to implement:
-                              // navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
-                            },
-                            child: const Text(
-                              'Log In',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          // Signup Link
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Don't have an account?"),
-                              TextButton(
-                                onPressed: () => navigateTo(context: context, screen: const SignupScreen()),
-                                child: const Text('Sign Up',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(255, 255, 55, 0),
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
