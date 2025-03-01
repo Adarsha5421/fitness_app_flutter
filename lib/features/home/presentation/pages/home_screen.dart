@@ -5,12 +5,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Sweat"),
-        backgroundColor: Colors.red,
-      ),
-      body: const Padding(
+    return const Scaffold(
+      // appBar: AppBar(
+      //   title: const Text("Sweat"),
+      //   backgroundColor: Colors.red,
+      // ),
+      body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
