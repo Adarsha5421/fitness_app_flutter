@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_tracker_app/features/calculator/presentation/pages/calculator_screen.dart';
 import 'package:gym_tracker_app/features/home/presentation/pages/home_screen.dart';
 import 'package:gym_tracker_app/features/workout/presentation/pages/work_out_screen.dart';
 import 'package:gym_tracker_app/view/bottom_navigation_screens/group_view.dart';
@@ -17,7 +18,7 @@ class _MyDashboardScreenState extends State<MyDashboardScreen> {
   List<Widget> lstBOttomScreen = [
     const HomeScreen(), // const HomePage(),
     const WorkOutScreen(), // const GymScreen(),
-    const GroupScreen(),
+    const CalculatorScreen(),
     const ProfileScreen(),
     const NotificationScreen(),
   ];
