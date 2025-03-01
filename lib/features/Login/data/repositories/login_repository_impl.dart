@@ -26,10 +26,10 @@ class UserRemoteRepository implements IUserRepository {
   }
 
   @override
-  Future<Either<Failure, String>> signUp(String email, String password, String name) async {
+  Future<Either<Failure, LoginEntity>> signUp(String email, String password, String name) async {
     try {
       final response = await userRemoteDataSource.signUp(email, password, name);
-      return Right(response);
+      return Right(response.toEntity());
     } on Exception catch (e) {
       return Left(ApiFailure(message: e.toString().replaceAll('Exception: ', '').trim()));
     }

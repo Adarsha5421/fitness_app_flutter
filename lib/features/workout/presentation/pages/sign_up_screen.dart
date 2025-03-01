@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_tracker_app/core/navigation_services.dart';
+import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:gym_tracker_app/features/Login/presentation/pages/login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -47,7 +49,8 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       // Process data and navigate
-      navigateAndPushReplacement(context: context, screen: const LoginScreen());
+      // navigateAndPushReplacement(context: context, screen: const LoginScreen());
+      context.read<LoginCubit>().signUpFx(context, email: _emailController.text, password: _passwordController.text, name: _nameController.text);
     }
   }
 
@@ -105,6 +108,7 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                             const SizedBox(height: 20),
                             // Name Input with validation
                             TextFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               controller: _nameController,
                               decoration: InputDecoration(
                                 labelText: 'Name',
@@ -121,6 +125,7 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                             const SizedBox(height: 16),
                             // Email Input with validation
                             TextFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               controller: _emailController,
                               decoration: InputDecoration(
                                 labelText: 'Email',
@@ -141,6 +146,7 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                             const SizedBox(height: 16),
                             // Password Input with validation and visibility toggle
                             TextFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               controller: _passwordController,
                               decoration: InputDecoration(
                                 labelText: 'Password',
@@ -159,8 +165,8 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter a password';
                                 }
-                                if (value.length < 6) {
-                                  return 'Password must be at least 6 characters';
+                                if (value.length < 4) {
+                                  return 'Password must be at least 4 characters';
                                 }
                                 return null;
                               },

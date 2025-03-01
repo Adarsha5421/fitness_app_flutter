@@ -6,6 +6,7 @@ class APIEndPoints {
   static String baseUrl = "http://192.168.1.71:5000/api/";
   static String loginUrl = "auth/login";
   static String signUpUrl = "auth/signup";
+  static String workOutsUrl = "workouts";
   static String meUrl = "auth/me";
   static String logOutUrl = "auth/logout";
   static String editProfileUrl = "auth/editprofile";

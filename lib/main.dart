@@ -16,6 +16,7 @@ void main() async {
       create: (BuildContext context) => LoginCubit(
         loginUserUsecase: getIt(),
         tokenSharedPrefs: getIt(),
+        signUpUsecase: getIt(),
         userSharedPrefs: getIt(),
       ),
     ),

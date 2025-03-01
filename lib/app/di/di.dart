@@ -8,6 +8,7 @@ import 'package:gym_tracker_app/features/Login/domain/repositories/login_reposit
 import 'package:gym_tracker_app/features/Login/domain/usecases/login_usecase.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:gym_tracker_app/features/home/presentation/cubit/home_cubit.dart';
+import 'package:gym_tracker_app/features/signup/domain/usecases/sign_up_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
@@ -22,10 +23,12 @@ Future<void> initDependencies() async {
   getIt.registerFactory<TokenSharedPrefs>(() => TokenSharedPrefs());
 
   getIt.registerSingleton<LoginUserUsecase>(LoginUserUsecase(userRepository: getIt(), userSharedPrefs: getIt()));
+  getIt.registerSingleton<SignUpUsecase>(SignUpUsecase(userRepository: getIt(), userSharedPrefs: getIt()));
   getIt.registerSingleton<LoginCubit>(LoginCubit(
     loginUserUsecase: getIt(),
     userSharedPrefs: getIt(),
     tokenSharedPrefs: getIt(),
+    signUpUsecase: getIt(),
   ));
 }
 

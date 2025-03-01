@@ -8,11 +8,12 @@ class UserRemoteDataSource {
   UserRemoteDataSource({required this.dio});
 
   /// Signs up a user
-  Future<String> signUp(String email, String password, String name) async {
+  Future<LoginModal> signUp(String email, String password, String name) async {
     try {
       var response = await dio.post(APIEndPoints.signUpUrl, data: {'email': email, 'password': password, 'name': name});
-      if (response.statusCode == 400) throw Exception(response.data['error']);
-      return response.data['message'];
+      if (response.statusCode == 400|| response.statusCode == 401) throw Exception(response.data['error']);
+     final responseData = response.data;
+      return LoginModal.fromJson(responseData);
     } on DioException catch (e) {
       throw Exception(e.message);
     } catch (e) {
