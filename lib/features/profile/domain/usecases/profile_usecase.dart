@@ -44,12 +44,12 @@ class ProfileParams extends Equatable {
   List<Object?> get props => [age, name, fitnessGoal, weight, height];
 }
 
-class SignUpUsecase implements UsecaseWithParams<LoginEntity, ProfileParams> {
+class ProfileUsecase implements UsecaseWithParams<LoginEntity, ProfileParams> {
   final IUserRepository userRepository;
   // final UserSharedPrefs tokenSharedPrefs;
   final UserSharedPrefs userSharedPrefs;
 
-  const SignUpUsecase({required this.userRepository, required this.userSharedPrefs});
+  const ProfileUsecase({required this.userRepository, required this.userSharedPrefs});
 
   @override
   Future<Either<Failure, LoginEntity>> call(ProfileParams params) async {
@@ -65,10 +65,10 @@ class SignUpUsecase implements UsecaseWithParams<LoginEntity, ProfileParams> {
         .then((value) {
       return value.fold((failure) => Left(failure), (userData) {
         // Save user data in Shared Preferences
-        userSharedPrefs.setUserData(userData.user ?? const UserEntity());
+        // userSharedPrefs.setUserData(userData.user ?? const UserEntity());
         // tokenSharedPrefs.saveToken(userData.token);
 
-        getIt<Dio>().options.headers['Authorization'] = userData.token;
+        // getIt<Dio>().options.headers['Authorization'] = userData.token;
 
         return Right(userData);
       });

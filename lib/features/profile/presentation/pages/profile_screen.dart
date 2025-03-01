@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_tracker_app/core/api_endpoints.dart';
+import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -18,20 +21,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController heightController = TextEditingController();
   String selectedGoal = "Maintain";
   File? profileImage;
+  String? apiImage;
 
   Future<void> pickImage() async {
     final status = await Permission.photos.request();
     // if (!status.isGranted) {
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        setState(() {
-          profileImage = File(image.path);
-        });
-      }
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        profileImage = File(image.path);
+      });
+    }
     // } else {
-      // Handle permission denied
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission denied")));
+    // Handle permission denied
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission denied")));
     // }
   }
 
@@ -53,9 +57,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     print("Updating Profile with:");
     print("Username: $username, Age: $age, Weight: $weight, Height: $height, Goal: $selectedGoal");
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Profile Updated!")),
-    );
+    context.read<LoginCubit>().updateProfile(
+          context,
+          name: username,
+          age: age,
+          weight: weight,
+          height: height,
+          fitnessGoal: selectedGoal,
+        );
+
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(content: Text("Profile Updated!")),
+    // );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var user = context.read<LoginCubit>().state.userData;
+    usernameController.text = user?.name ?? '';
+    selectedGoal = user?.fitnessGoal ?? '';
+    apiImage = user?.profilePic ?? '';
   }
 
   @override
@@ -81,9 +104,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onTap: pickImage,
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundColor: Colors.red,
-                  backgroundImage: profileImage != null ? FileImage(profileImage!) : null,
-                  child: profileImage == null ? const Icon(Icons.camera_alt, color: Colors.white, size: 40) : null,
+                  // backgroundColor: Colors.red,
+                  // backgroundImage: profileImage != null ? FileImage(profileImage!) : null,
+                  backgroundImage: NetworkImage('${APIEndPoints.baseUrl}/$apiImage') as ImageProvider,
+                  // child: profileImage == null ? const Icon(Icons.camera_alt, color: Colors.white, size: 40) : null,
+                  child: Image.network('${APIEndPoints.baseUrl}$apiImage'),
                 ),
               ),
               const SizedBox(height: 10),

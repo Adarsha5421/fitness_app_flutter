@@ -6,7 +6,6 @@ import 'package:gym_tracker_app/common/app_theme/app_theme.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:gym_tracker_app/features/dashboard/presentation/pages/dashboad_screen.dart';
 import 'package:gym_tracker_app/features/workout/presentation/cubit/workout_cubit.dart';
-import 'package:gym_tracker_app/view/splash_screen_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,12 +14,7 @@ void main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MultiBlocProvider(providers: [
     BlocProvider<LoginCubit>(
-      create: (BuildContext context) => LoginCubit(
-        loginUserUsecase: getIt(),
-        tokenSharedPrefs: getIt(),
-        signUpUsecase: getIt(),
-        userSharedPrefs: getIt(),
-      ),
+      create: (BuildContext context) => LoginCubit(loginUserUsecase: getIt(), tokenSharedPrefs: getIt(), signUpUsecase: getIt(), userSharedPrefs: getIt(), profileUsecase: getIt()),
     ),
     BlocProvider<WorkoutCubit>(
       create: (BuildContext context) => WorkoutCubit(

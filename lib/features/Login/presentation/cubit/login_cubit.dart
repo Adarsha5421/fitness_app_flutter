@@ -7,6 +7,7 @@ import 'package:gym_tracker_app/features/Login/domain/entities/login_entity.dart
 import 'package:gym_tracker_app/features/Login/domain/usecases/login_usecase.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_state.dart';
 import 'package:gym_tracker_app/features/dashboard/presentation/pages/dashboad_screen.dart';
+import 'package:gym_tracker_app/features/profile/domain/usecases/profile_usecase.dart';
 import 'package:gym_tracker_app/features/signup/domain/usecases/sign_up_usecase.dart';
 
 // part 'login_state.dart';
@@ -14,6 +15,7 @@ import 'package:gym_tracker_app/features/signup/domain/usecases/sign_up_usecase.
 class LoginCubit extends Cubit<LoginState> {
   final LoginUserUsecase loginUserUsecase;
   final SignUpUsecase signUpUsecase;
+  final ProfileUsecase profileUsecase;
   final UserSharedPrefs userSharedPrefs;
   final TokenSharedPrefs tokenSharedPrefs;
 
@@ -22,6 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
     required this.signUpUsecase,
     required this.userSharedPrefs,
     required this.tokenSharedPrefs,
+    required this.profileUsecase,
   }) : super(LoginState.initially());
 
   loginFx(
@@ -34,7 +37,7 @@ class LoginCubit extends Cubit<LoginState> {
     response.fold((error) {
       showMySnackBar(context, message: error.message, color: Colors.red);
     }, (success) {
-      emit(state.copyWith(isLoadingState: false));
+      emit(state.copyWith(isLoadingState: false,userData: success.user));
       userSharedPrefs.setUserData(success.user ?? const UserEntity());
       tokenSharedPrefs.saveToken(success.token ?? '');
       navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
@@ -53,7 +56,7 @@ class LoginCubit extends Cubit<LoginState> {
     response.fold((error) {
       showMySnackBar(context, message: error.message, color: Colors.red);
     }, (success) {
-      emit(state.copyWith(isLoadingState: false));
+      emit(state.copyWith(isLoadingState: false,userData: success.user));
       userSharedPrefs.setUserData(success.user ?? const UserEntity());
       tokenSharedPrefs.saveToken(success.token ?? '');
       navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
@@ -61,14 +64,20 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-
-
-  updateProfile({required String name,
+  updateProfile(
+    BuildContext context, {
+    required String name,
     required String age,
     required String weight,
     required String height,
     required String fitnessGoal,
-  }){
-
+  }) async {
+    final response = await profileUsecase.call(ProfileParams(weight: weight, height: height, fitnessGoal: fitnessGoal, age: age, name: name));
+    response.fold((error) {
+      showMySnackBar(context, message: 'Something went wrong', color: Colors.red);
+    }, (result) {
+          emit(state.copyWith(isLoadingState: false, userData: result.user));
+      showMySnackBar(context, message: 'Profile updated Successfully');
+    });
   }
 }

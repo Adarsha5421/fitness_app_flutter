@@ -8,6 +8,7 @@ import 'package:gym_tracker_app/features/Login/domain/repositories/login_reposit
 import 'package:gym_tracker_app/features/Login/domain/usecases/login_usecase.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:gym_tracker_app/features/home/presentation/cubit/home_cubit.dart';
+import 'package:gym_tracker_app/features/profile/domain/usecases/profile_usecase.dart';
 import 'package:gym_tracker_app/features/signup/domain/usecases/sign_up_usecase.dart';
 import 'package:gym_tracker_app/features/workout/data/datasources/work_out_remote_datasource.dart';
 import 'package:gym_tracker_app/features/workout/data/repositories/work_out_rep_impl.dart';
@@ -29,11 +30,13 @@ Future<void> initDependencies() async {
 
   getIt.registerSingleton<LoginUserUsecase>(LoginUserUsecase(userRepository: getIt(), userSharedPrefs: getIt()));
   getIt.registerSingleton<SignUpUsecase>(SignUpUsecase(userRepository: getIt(), userSharedPrefs: getIt()));
+  getIt.registerSingleton<ProfileUsecase>(ProfileUsecase(userRepository: getIt(), userSharedPrefs: getIt()));
   getIt.registerSingleton<LoginCubit>(LoginCubit(
     loginUserUsecase: getIt(),
     userSharedPrefs: getIt(),
     tokenSharedPrefs: getIt(),
     signUpUsecase: getIt(),
+    profileUsecase: getIt()
   ));
 
   ////////workout////////
