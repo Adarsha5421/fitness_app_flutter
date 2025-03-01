@@ -9,5 +9,5 @@ class APIEndPoints {
   static String workOutsUrl = "workouts";
   static String meUrl = "auth/me";
   static String logOutUrl = "auth/logout";
-  static String editProfileUrl = "auth/editprofile";
+  static String editProfileUrl = "users/profile";
 }

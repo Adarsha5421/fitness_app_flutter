@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gym_tracker_app/features/calculator/presentation/pages/calculator_screen.dart';
 import 'package:gym_tracker_app/features/home/presentation/pages/home_screen.dart';
+import 'package:gym_tracker_app/features/profile/presentation/pages/profile_screen.dart';
 import 'package:gym_tracker_app/features/workout/presentation/pages/work_out_screen.dart';
-import 'package:gym_tracker_app/view/bottom_navigation_screens/group_view.dart';
 import 'package:gym_tracker_app/view/bottom_navigation_screens/notification_view.dart';
-import 'package:gym_tracker_app/view/bottom_navigation_screens/profile_view.dart';
 
 class MyDashboardScreen extends StatefulWidget {
   const MyDashboardScreen({super.key});

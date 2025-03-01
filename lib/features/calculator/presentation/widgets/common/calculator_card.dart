@@ -22,14 +22,14 @@ class CalculatorCard extends StatelessWidget {
               const SizedBox(height: 12),
               ...fields,
               const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                  onPressed: () {},
-                  child: const Text('Calculate', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                ),
-              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: ElevatedButton(
+              //     style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+              //     onPressed: () {},
+              //     child: const Text('Calculate', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              //   ),
+              // ),
             ],
           ),
         ),

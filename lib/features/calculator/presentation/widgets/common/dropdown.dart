@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class CustomDropdownField extends StatelessWidget {
   final String label;
   final List<String> items;
+  final ValueChanged<String?>? onChanged;
 
-  const CustomDropdownField({super.key, required this.label, required this.items});
+  const CustomDropdownField({super.key, required this.label, required this.items, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CustomDropdownField extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         ),
         items: items.map((item) => DropdownMenuItem(value: item, child: Text(item, style: const TextStyle(color: Colors.white)))).toList(),
-        onChanged: (value) {},
+        onChanged: onChanged,
       ),
     );
   }
