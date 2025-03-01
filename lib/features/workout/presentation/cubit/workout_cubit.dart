@@ -20,7 +20,32 @@ class WorkoutCubit extends Cubit<WorkOutState> {
       showMySnackBar(context, message: 'Something went wrong');
     }, (data) {
       emit(state.copyWith(isLoadingState: false));
-      emit(state.copyWith(workOutList: data));
+      emit(state.copyWith(
+        workOutList: data,
+        workOutListIntial: data,
+        workOutBodyPartsList: ['ALL', ...data.map((e) => e.bodyPart!)],
+      ));
     });
+  }
+
+  // filterBodyParts(String x) {
+  //   if (x == 'ALl') {
+  //     emit(state.copyWith(workOutList: state.workOutListIntial));
+  //   } else if (x.toLowerCase() == 'chest') {
+  //     emit(
+  //       state.copyWith(workOutList: state.workOutListIntial?.where((e) => e.bodyPart?.toLowerCase() == 'chest').toList()),
+  //     );
+  //   } else if (x.toLowerCase() == 'arms') {}
+  // }
+  filterBodyParts(String selectedPart) {
+    if (selectedPart.toLowerCase() == 'all') {
+      emit(state.copyWith(workOutList: state.workOutListIntial));
+    } else {
+      emit(
+        state.copyWith(
+          workOutList: state.workOutListIntial?.where((e) => e.bodyPart?.toLowerCase() == selectedPart.toLowerCase()).toList(),
+        ),
+      );
+    }
   }
 }

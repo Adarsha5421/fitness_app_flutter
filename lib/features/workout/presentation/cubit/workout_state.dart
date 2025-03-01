@@ -14,6 +14,8 @@ class WorkOutState with _$WorkOutState {
     // WorkOut data
     // UserEntity? userData,
     List<WorkOutEntity>? workOutList,
+    List<WorkOutEntity>? workOutListIntial,
+    @Default(['All']) List<String> workOutBodyPartsList,
     String? token,
   }) = _WorkOutState;
 
