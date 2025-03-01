@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gym_tracker_app/app/di/di.dart';
 import 'package:gym_tracker_app/common/app_theme/app_theme.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
-import 'package:gym_tracker_app/view/splash_screen_view.dart';
+import 'package:gym_tracker_app/features/dashboard/presentation/pages/dashboad_screen.dart';
+import 'package:gym_tracker_app/features/workout/presentation/cubit/workout_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,11 @@ void main() async {
         userSharedPrefs: getIt(),
       ),
     ),
+    BlocProvider<WorkoutCubit>(
+      create: (BuildContext context) => WorkoutCubit(
+        workOutUsecase: getIt(),
+      )..fetchWorkList(context),
+    ),
   ], child: const MyApp()));
 }
 
@@ -31,7 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
-      home: const SplashScreen(),
+      home: const MyDashboardScreen(),
       // initialRoute: '/',
       // routes: {
       //   '/': (context) => const SplashScreen(),

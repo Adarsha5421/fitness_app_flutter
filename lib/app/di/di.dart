@@ -9,6 +9,11 @@ import 'package:gym_tracker_app/features/Login/domain/usecases/login_usecase.dar
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:gym_tracker_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:gym_tracker_app/features/signup/domain/usecases/sign_up_usecase.dart';
+import 'package:gym_tracker_app/features/workout/data/datasources/work_out_remote_datasource.dart';
+import 'package:gym_tracker_app/features/workout/data/repositories/work_out_rep_impl.dart';
+import 'package:gym_tracker_app/features/workout/domain/repositories/work_out_rep.dart';
+import 'package:gym_tracker_app/features/workout/domain/usecases/work_out_usecase.dart';
+import 'package:gym_tracker_app/features/workout/presentation/cubit/workout_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
@@ -30,6 +35,12 @@ Future<void> initDependencies() async {
     tokenSharedPrefs: getIt(),
     signUpUsecase: getIt(),
   ));
+
+  ////////workout////////
+  getIt.registerSingleton<WorkOutRemoteDatasource>(WorkOutRemoteDatasource(dio: getIt()));
+  getIt.registerSingleton<WorkOutRep>(WorkOutRepImpl(workOutRemoteDatasource: getIt()));
+  getIt.registerSingleton<WorkOutUsecase>(WorkOutUsecase(workOutRep: getIt()));
+  getIt.registerSingleton<WorkoutCubit>(WorkoutCubit(workOutUsecase: getIt()));
 }
 
 _initApiService() {

@@ -1,10 +1,21 @@
-part of 'workout_cubit.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:gym_tracker_app/features/workout/domain/entities/work_out_entity.dart';
 
-abstract class WorkoutState extends Equatable {
-  const WorkoutState();
+part 'workout_state.freezed.dart';
 
-  @override
-  List<Object> get props => [];
+@freezed
+class WorkOutState with _$WorkOutState {
+  const factory WorkOutState({
+    // General states
+    @Default(false) bool isLoadingState,
+    @Default(false) bool isSuccessState,
+    String? errorState,
+
+    // WorkOut data
+    // UserEntity? userData,
+    List<WorkOutEntity>? workOutList,
+    String? token,
+  }) = _WorkOutState;
+
+  factory WorkOutState.initially() => const WorkOutState();
 }
-
-class WorkoutInitial extends WorkoutState {}
