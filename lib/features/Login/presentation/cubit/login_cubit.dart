@@ -60,4 +60,15 @@ class LoginCubit extends Cubit<LoginState> {
       showMySnackBar(context, message: 'SignUp Successful');
     });
   }
+
+
+
+  updateProfile({required String name,
+    required String age,
+    required String weight,
+    required String height,
+    required String fitnessGoal,
+  }){
+
+  }
 }

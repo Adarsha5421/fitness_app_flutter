@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,16 +19,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String selectedGoal = "Maintain";
   File? profileImage;
 
-  /// **Pick Image from Gallery**
   Future<void> pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        profileImage = File(image.path);
-      });
-    }
+    final status = await Permission.photos.request();
+    // if (!status.isGranted) {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        setState(() {
+          profileImage = File(image.path);
+        });
+      }
+    // } else {
+      // Handle permission denied
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission denied")));
+    // }
   }
 
   /// **Call API to Update Profile**

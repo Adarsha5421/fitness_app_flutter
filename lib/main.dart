@@ -6,6 +6,7 @@ import 'package:gym_tracker_app/common/app_theme/app_theme.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:gym_tracker_app/features/dashboard/presentation/pages/dashboad_screen.dart';
 import 'package:gym_tracker_app/features/workout/presentation/cubit/workout_cubit.dart';
+import 'package:gym_tracker_app/view/splash_screen_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
       home: const MyDashboardScreen(),
+      // home: const SplashScreen(),
       // initialRoute: '/',
       // routes: {
       //   '/': (context) => const SplashScreen(),
