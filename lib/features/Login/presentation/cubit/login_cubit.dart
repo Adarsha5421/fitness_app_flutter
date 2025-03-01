@@ -35,6 +35,7 @@ class LoginCubit extends Cubit<LoginState> {
       userSharedPrefs.setUserData(success.user ?? const UserEntity());
       tokenSharedPrefs.saveToken(success.token ?? '');
       navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
+      showMySnackBar(context, message: 'Login Successful');
     });
   }
 }
