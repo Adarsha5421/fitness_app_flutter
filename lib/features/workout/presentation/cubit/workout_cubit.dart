@@ -23,7 +23,7 @@ class WorkoutCubit extends Cubit<WorkOutState> {
       emit(state.copyWith(
         workOutList: data,
         workOutListIntial: data,
-        workOutBodyPartsList: ['ALL', ...data.map((e) => e.bodyPart!)],
+        workOutBodyPartsList: ['ALL', ...data.map((e) => e.bodyPart!).toSet()],
       ));
     });
   }

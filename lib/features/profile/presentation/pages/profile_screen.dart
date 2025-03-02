@@ -25,7 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> pickImage() async {
     final status = await Permission.photos.request();
-    // if (!status.isGranted) {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
@@ -33,13 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         profileImage = File(image.path);
       });
     }
-    // } else {
-    // Handle permission denied
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Permission denied")));
-    // }
   }
 
-  /// **Call API to Update Profile**
   void updateProfile() {
     final String username = usernameController.text;
     final String age = ageController.text;
@@ -53,10 +47,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return;
     }
 
-    // Example API call
-    print("Updating Profile with:");
-    print("Username: $username, Age: $age, Weight: $weight, Height: $height, Goal: $selectedGoal");
-
     context.read<LoginCubit>().updateProfile(
           context,
           name: username,
@@ -64,16 +54,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           weight: weight,
           height: height,
           fitnessGoal: selectedGoal,
+          profilepic: profileImage,
         );
-
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(content: Text("Profile Updated!")),
-    // );
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     var user = context.read<LoginCubit>().state.userData;
     usernameController.text = user?.name ?? '';
@@ -99,28 +85,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Profile Image Section
               GestureDetector(
                 onTap: pickImage,
                 child: CircleAvatar(
-                  radius: 50,
-                  // backgroundColor: Colors.red,
-                  // backgroundImage: profileImage != null ? FileImage(profileImage!) : null,
-                  backgroundImage: NetworkImage('${APIEndPoints.baseUrl}/$apiImage') as ImageProvider,
-                  // child: profileImage == null ? const Icon(Icons.camera_alt, color: Colors.white, size: 40) : null,
-                  child: Image.network('${APIEndPoints.baseUrl}$apiImage'),
+                  radius: 40,
+                  backgroundColor: Colors.grey[200],
+                  backgroundImage: profileImage != null ? FileImage(profileImage!) : (apiImage != null && apiImage!.isNotEmpty ? NetworkImage('${APIEndPoints.mediaUrl}/$apiImage') : null),
+                  child: (profileImage == null && (apiImage == null || apiImage!.isEmpty)) ? const Icon(Icons.camera_alt, size: 40, color: Colors.grey) : null,
                 ),
               ),
               const SizedBox(height: 10),
               Text(usernameController.text, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
 
               const SizedBox(height: 20),
-              _buildTextField("Username", usernameController),
+              _buildTextField("Username", usernameController, isNumber: false), // Ensure username is text
               _buildTextField("Age", ageController, isNumber: true),
               _buildTextField("Weight (kg)", weightController, isNumber: true),
               _buildTextField("Height (cm)", heightController, isNumber: true),
 
-              // Fitness Goal Dropdown
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: DropdownButtonFormField<String>(
@@ -141,7 +123,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
 
-              // Update Profile Button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -157,7 +138,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  /// **Reusable TextField Widget**
   Widget _buildTextField(String label, TextEditingController controller, {bool isNumber = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -167,7 +147,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         decoration: InputDecoration(
           labelText: label,
           filled: true,
-          // fillColor: Colors.grey[900],
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         ),
       ),

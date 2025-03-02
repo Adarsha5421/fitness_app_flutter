@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_tracker_app/common/app_theme/snackbar.dart';
@@ -71,8 +73,9 @@ class LoginCubit extends Cubit<LoginState> {
     required String weight,
     required String height,
     required String fitnessGoal,
+    required File? profilepic
   }) async {
-    final response = await profileUsecase.call(ProfileParams(weight: weight, height: height, fitnessGoal: fitnessGoal, age: age, name: name));
+    final response = await profileUsecase.call(ProfileParams(weight: weight, height: height, fitnessGoal: fitnessGoal, age: age, name: name,profilePic: profilepic));
     response.fold((error) {
       showMySnackBar(context, message: 'Something went wrong', color: Colors.red);
     }, (result) {

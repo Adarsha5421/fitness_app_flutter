@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_tracker_app/core/navigation_services.dart';
 import 'package:gym_tracker_app/features/workout/presentation/pages/sign_up_screen.dart';
-import 'package:gym_tracker_app/view/signup_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatelessWidget {

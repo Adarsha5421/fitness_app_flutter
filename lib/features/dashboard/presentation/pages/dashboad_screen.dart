@@ -5,20 +5,27 @@ import 'package:gym_tracker_app/features/profile/presentation/pages/profile_scre
 import 'package:gym_tracker_app/features/workout/presentation/pages/work_out_screen.dart';
 
 class MyDashboardScreen extends StatefulWidget {
-  const MyDashboardScreen({super.key});
+  final int initialIndex; // Add this
+  const MyDashboardScreen({super.key, this.initialIndex = 0}); // Default is HomeScreen
 
   @override
   State<MyDashboardScreen> createState() => _MyDashboardScreenState();
 }
 
 class _MyDashboardScreenState extends State<MyDashboardScreen> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex; // Set the index from constructor
+  }
+
   List<Widget> lstBOttomScreen = [
-    const HomeScreen(), // const HomePage(),
-    const WorkOutScreen(), // const GymScreen(),
+    const HomeScreen(),
+    const WorkOutScreen(),
     const CalculatorScreen(),
     const ProfileScreen(),
-    // const NotificationScreen(),
   ];
 
   @override
@@ -26,9 +33,7 @@ class _MyDashboardScreenState extends State<MyDashboardScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Dashboard',
-          ),
+          title: const Text('Dashboard'),
           backgroundColor: const Color.fromARGB(255, 255, 55, 0),
           centerTitle: true,
         ),
@@ -38,29 +43,10 @@ class _MyDashboardScreenState extends State<MyDashboardScreen> {
           selectedItemColor: Colors.white,
           backgroundColor: const Color.fromARGB(255, 255, 55, 0),
           items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.run_circle_sharp),
-              label: 'Workout',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.group_sharp,
-                ),
-                label: 'Group'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person,
-                ),
-                label: 'Profile'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.notification_add_outlined,
-                ),
-                label: 'Notification'),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.run_circle_sharp), label: 'Workout'),
+            BottomNavigationBarItem(icon: Icon(Icons.group_sharp), label: 'Group'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
           currentIndex: _selectedIndex,
           onTap: (index) {

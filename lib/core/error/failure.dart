@@ -18,6 +18,7 @@ class LocalDatabaseFailure extends Failure {
 }
 
 class ApiFailure extends Failure {
+  @override
   final int? statusCode;
 
   ApiFailure({

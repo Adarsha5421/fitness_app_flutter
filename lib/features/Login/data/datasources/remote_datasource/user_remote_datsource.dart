@@ -95,6 +95,12 @@ class UserRemoteDataSource {
         "height": params.height,
         "weight": params.weight,
         "fitnessGoal": params.fitnessGoal,
+        if (params.profilePic != null)
+          "profilePic": await MultipartFile.fromFile(
+            params.profilePic!.path,
+            // filename: params.profilePic!.path.split("/").last + DateTime.now().toString(),
+            // contentType: DioMediaType.parse('image/jpeg'),
+          ),
       });
 
       Response response = await dio.put(

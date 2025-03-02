@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 import 'package:gym_tracker_app/features/workout/domain/entities/work_out_entity.dart';
 

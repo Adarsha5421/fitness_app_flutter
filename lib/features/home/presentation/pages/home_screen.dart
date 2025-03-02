@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gym_tracker_app/core/navigation_services.dart';
+import 'package:gym_tracker_app/features/dashboard/presentation/pages/dashboad_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final primaryColor = theme.brightness == Brightness.dark ? Colors.redAccent : Colors.red;
+
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text("Sweat"),
@@ -47,7 +53,27 @@ class HomeScreen extends StatelessWidget {
                 width: 500,
                 height: 700,
                 fit: BoxFit.fitWidth,
-              ))
+              )),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
+                  onPressed: () {
+                    //naviagte to 2nd screen in out nav bar
+                    navigateAndPushReplacement(
+                        context: context,
+                        screen: const MyDashboardScreen(
+                          initialIndex: 1,
+                        ));
+                    //   final dashboardState = context.findAncestorStateOfType<_MyDashboardScreenState>();
+                    // if (dashboardState != null) {
+                    //   dashboardState.setIndex(1); // Change index to WorkOutScreen
+                    // }
+                  },
+                  child: const Text("Explore  WorkOuts", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                ),
+              ),
             ],
           ),
         ),

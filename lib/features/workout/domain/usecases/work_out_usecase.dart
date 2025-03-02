@@ -1,7 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
-import 'package:gym_tracker_app/app/di/di.dart';
 import 'package:gym_tracker_app/features/workout/domain/entities/work_out_entity.dart';
 import 'package:gym_tracker_app/features/workout/domain/repositories/work_out_rep.dart';
 

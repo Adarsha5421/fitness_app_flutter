@@ -1,7 +1,7 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:gym_tracker_app/app/di/di.dart';
 import 'package:gym_tracker_app/features/Login/data/datasources/local_datasource/login_local_datasource.dart';
 import 'package:gym_tracker_app/features/Login/domain/entities/login_entity.dart';
 import 'package:gym_tracker_app/features/Login/domain/repositories/login_repository.dart';
@@ -22,6 +22,7 @@ class ProfileParams extends Equatable {
   final String weight;
   final String height;
   final String fitnessGoal;
+  final File? profilePic;
 
   const ProfileParams({
     required this.weight,
@@ -30,15 +31,18 @@ class ProfileParams extends Equatable {
     required this.age,
     // required this.password,
     required this.name,
+    required this.profilePic,
   });
 
-  const ProfileParams.empty()
-      : age = '_empty.age',
-        // password = '_empty.password',
-        name = '_empty.name',
-        fitnessGoal = '_empty.fitnessGoal',
-        weight = '_empty.weight',
-        height = '_empty.height';
+  // const ProfileParams.empty()
+  //     : age = '_empty.age',
+  //       // password = '_empty.password',
+  //       name = '_empty.name',
+  //       fitnessGoal = '_empty.fitnessGoal',
+  //       weight = '_empty.weight',
+  //       height = '_empty.height',
+  //       profilePic = '_empty.profilePic'
+  //       ;
 
   @override
   List<Object?> get props => [age, name, fitnessGoal, weight, height];
@@ -61,6 +65,7 @@ class ProfileUsecase implements UsecaseWithParams<LoginEntity, ProfileParams> {
       fitnessGoal: params.fitnessGoal,
       age: params.age,
       name: params.name,
+      profilePic: params.profilePic
     ))
         .then((value) {
       return value.fold((failure) => Left(failure), (userData) {

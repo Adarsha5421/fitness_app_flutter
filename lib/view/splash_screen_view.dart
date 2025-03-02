@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gym_tracker_app/core/navigation_services.dart';
 import 'package:gym_tracker_app/features/onboarding/presentation/pages/onboarding_screen.dart';
-import 'package:gym_tracker_app/view/onboarding_view.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
