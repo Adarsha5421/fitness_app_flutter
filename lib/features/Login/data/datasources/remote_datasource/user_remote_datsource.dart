@@ -38,43 +38,6 @@ class UserRemoteDataSource {
     }
   }
 
-  // Future<LoginModal> updateProfile(ProfileParams params) async {
-  //   try {
-  //     var token = await getIt<TokenSharedPrefs>().getToken();
-  //     token.fold(
-  //       (failure) => print("Error: ${failure.message}"), // If there's an error
-  //       (token) => print("Token: $token"), // If token exists
-  //     );
-  //     FormData formData = FormData.fromMap({
-  //       "name": params.name,
-  //       "age": params.age,
-  //       "height": params.height,
-  //       "weight": params.weight,
-  //       "fitnessGoal": params.fitnessGoal,
-  //       // if (image != null)
-  //       //   "profileImage": await MultipartFile.fromFile(
-  //       //     image.path,
-  //       //     filename: image.path.split("/").last + DateTime.now().toString(),
-  //       //     contentType: DioMediaType.parse('image/jpeg'),
-  //       //   ),
-  //     });
-
-  //     Response response = await dio.put(
-  //       APIEndPoints.editProfileUrl,
-  //       data: formData,
-  //       options: Options(headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       }),
-  //     );
-  //     if (response.statusCode == 400 || response.statusCode == 401) throw Exception(response.data['error']);
-
-  //     return LoginModal.fromJson(response.data);
-  //   } on DioException catch (e) {
-  //     throw Exception('Dio Error: ${e.message ?? 'Unknown error'}');
-  //   } catch (e) {
-  //     throw Exception('An unexpected error occurred: $e');
-  //   }
-  // }
   Future<LoginModal> updateProfile(ProfileParams params) async {
     try {
       var tokenResult = await getIt<TokenSharedPrefs>().getToken();
