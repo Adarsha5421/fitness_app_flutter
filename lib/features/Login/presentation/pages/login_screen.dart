@@ -4,6 +4,7 @@ import 'package:gym_tracker_app/core/navigation_services.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_state.dart';
 import 'package:gym_tracker_app/features/workout/presentation/pages/sign_up_screen.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +20,11 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   late AnimationController _controller;
   late Animation<Offset> _logoAnimation;
   bool _isPasswordVisible = false;
+  double _lastX = 0.0;
+  double _lastY = 0.0;
+  double _lastZ = 0.0;
+  final double _shakeThreshold = 2.7; // Adjust this value to change sensitivity
+  DateTime? _lastShakeTime;
 
   @override
   void initState() {
@@ -29,14 +35,19 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     );
 
     _logoAnimation = Tween<Offset>(
-      begin: const Offset(0, -0.2), // Slightly above the original position
+      begin: const Offset(0, -0.2),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
-      curve: Curves.elasticOut, // Bouncing effect for the logo
+      curve: Curves.elasticOut,
     ));
 
     _controller.forward();
+
+    // Start listening to accelerometer events
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      _handleShake(event);
+    });
   }
 
   @override
@@ -47,12 +58,47 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     super.dispose();
   }
 
+  // Handle shake event
+  void _handleShake(AccelerometerEvent event) {
+    final double x = event.x;
+    final double y = event.y;
+    final double z = event.z;
+
+    final double deltaX = (x - _lastX).abs();
+    final double deltaY = (y - _lastY).abs();
+    final double deltaZ = (z - _lastZ).abs();
+
+    if (deltaX > _shakeThreshold || deltaY > _shakeThreshold || deltaZ > _shakeThreshold) {
+      final now = DateTime.now();
+      if (_lastShakeTime == null || now.difference(_lastShakeTime!) > const Duration(seconds: 1)) {
+        _lastShakeTime = now;
+        _onShake();
+      }
+    }
+
+    _lastX = x;
+    _lastY = y;
+    _lastZ = z;
+  }
+
+  // Function to call when shake is detected
+  void _onShake() {
+    if (_formKey.currentState!.validate()) {
+      context.read<LoginCubit>().loginFx(
+            context,
+            email: _emailController.text,
+            password: _passwordController.text,
+          );
+      // Uncomment when ready to implement:
+      // navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
+    }
+  }
+
   // Email validation
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     }
-    // Regular expression for email validation
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegExp.hasMatch(value)) {
       return 'Please enter a valid email address';

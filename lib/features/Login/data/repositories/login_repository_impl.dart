@@ -18,7 +18,7 @@ class UserRemoteRepository implements IUserRepository {
       // Call the login function from the remote data source
       final response = await userRemoteDataSource.login(email, password);
       return Right(response.toEntity());
-    } on Exception catch (e) {
+    } on Exception catch (e) {   
       // Handle any errors and return the failure message
       return Left(ApiFailure(message: e.toString().replaceAll('Exception: ', '').trim()));
     }
