@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_tracker_app/app/di/di.dart';
 import 'package:gym_tracker_app/core/api_endpoints.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_cubit.dart';
 import 'package:image_picker/image_picker.dart';
@@ -61,9 +62,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    var user = context.read<LoginCubit>().state.userData;
+    // var user = context.read<LoginCubit>().state.userData;
+    var user = getIt<LoginCubit>().state.userData;
     usernameController.text = user?.name ?? '';
-    selectedGoal = user?.fitnessGoal ?? '';
+    selectedGoal = user?.fitnessGoal ?? 'Maintain';
     apiImage = user?.profilePic ?? '';
   }
 
@@ -79,6 +81,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text("Your Profile"),
         backgroundColor: primaryColor,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: GestureDetector(
+              child: const Icon(Icons.logout),
+              onTap: () => context.read<LoginCubit>().logOut(context),
+            ),
+          )
+        ],
       ),
       body: Center(
         child: Padding(
@@ -112,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     fillColor: fieldColor,
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  items: ["Lose Weight", "Gain Muscle", "Maintain"].map((goal) {
+                  items: ["", "Lose Weight", "Gain Muscle", "Maintain"].map((goal) {
                     return DropdownMenuItem(value: goal, child: Text(goal));
                   }).toList(),
                   onChanged: (value) {

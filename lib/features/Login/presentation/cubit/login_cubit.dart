@@ -8,6 +8,7 @@ import 'package:gym_tracker_app/features/Login/data/datasources/local_datasource
 import 'package:gym_tracker_app/features/Login/domain/entities/login_entity.dart';
 import 'package:gym_tracker_app/features/Login/domain/usecases/login_usecase.dart';
 import 'package:gym_tracker_app/features/Login/presentation/cubit/login_state.dart';
+import 'package:gym_tracker_app/features/Login/presentation/pages/login_screen.dart';
 import 'package:gym_tracker_app/features/dashboard/presentation/pages/dashboad_screen.dart';
 import 'package:gym_tracker_app/features/profile/domain/usecases/profile_usecase.dart';
 import 'package:gym_tracker_app/features/signup/domain/usecases/sign_up_usecase.dart';
@@ -39,7 +40,7 @@ class LoginCubit extends Cubit<LoginState> {
     response.fold((error) {
       showMySnackBar(context, message: error.message, color: Colors.red);
     }, (success) {
-      emit(state.copyWith(isLoadingState: false,userData: success.user));
+      emit(state.copyWith(isLoadingState: false, userData: success.user));
       userSharedPrefs.setUserData(success.user ?? const UserEntity());
       tokenSharedPrefs.saveToken(success.token ?? '');
       navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
@@ -58,7 +59,7 @@ class LoginCubit extends Cubit<LoginState> {
     response.fold((error) {
       showMySnackBar(context, message: error.message, color: Colors.red);
     }, (success) {
-      emit(state.copyWith(isLoadingState: false,userData: success.user));
+      emit(state.copyWith(isLoadingState: false, userData: success.user));
       userSharedPrefs.setUserData(success.user ?? const UserEntity());
       tokenSharedPrefs.saveToken(success.token ?? '');
       navigateAndPushReplacement(context: context, screen: const MyDashboardScreen());
@@ -66,21 +67,25 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-  updateProfile(
-    BuildContext context, {
-    required String name,
-    required String age,
-    required String weight,
-    required String height,
-    required String fitnessGoal,
-    required File? profilepic
-  }) async {
-    final response = await profileUsecase.call(ProfileParams(weight: weight, height: height, fitnessGoal: fitnessGoal, age: age, name: name,profilePic: profilepic));
+  updateProfile(BuildContext context, {required String name, required String age, required String weight, required String height, required String fitnessGoal, required File? profilepic}) async {
+    final response = await profileUsecase.call(ProfileParams(weight: weight, height: height, fitnessGoal: fitnessGoal, age: age, name: name, profilePic: profilepic));
     response.fold((error) {
       showMySnackBar(context, message: 'Something went wrong', color: Colors.red);
     }, (result) {
-          emit(state.copyWith(isLoadingState: false, userData: result.user));
+      emit(state.copyWith(isLoadingState: false, userData: result.user));
       showMySnackBar(context, message: 'Profile updated Successfully');
     });
+  }
+
+  setUser(UserEntity x) {
+    emit(state.copyWith(userData: x));
+    print('qwe${state.userData}');
+  }
+
+  logOut(BuildContext c) {
+    emit(state.copyWith(token: null, userData: null));
+    tokenSharedPrefs.clearToken();
+    userSharedPrefs.clear();
+    navigateAndPushReplacement(context: c, screen: const LoginScreen());
   }
 }
