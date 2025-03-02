@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
     final primaryColor = theme.brightness == Brightness.dark ? Colors.redAccent : Colors.red;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       // appBar: AppBar(
       //   title: const Text("Sweat"),
       //   backgroundColor: Colors.red,
@@ -22,9 +23,9 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Welcome Back!", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              const Text("Welcome Back!", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
               const SizedBox(height: 10),
-              const Text("Today's Workout: Chest and Triceps"),
+              const Text("Today's Workout: Chest and Triceps", style: TextStyle(color: Colors.white)),
               // const SizedBox(height: 20),
               // const Card(
               //   elevation: 4,
@@ -49,9 +50,9 @@ class HomeScreen extends StatelessWidget {
               Container(
                   // color: Colors.amber,
                   child: Image.asset(
-                'assets/images/muscle.png',
+                'assets/images/qqq.png',
                 width: 500,
-                height: 700,
+                height: 500,
                 fit: BoxFit.fitWidth,
               )),
 
