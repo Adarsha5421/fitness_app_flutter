@@ -32,11 +32,11 @@ class _MyDashboardScreenState extends State<MyDashboardScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Dashboard'),
-          backgroundColor: const Color.fromARGB(255, 255, 55, 0),
-          centerTitle: true,
-        ),
+        // appBar: AppBar(
+        //   title: const Text('Dashboard'),
+        //   backgroundColor: const Color.fromARGB(255, 255, 55, 0),
+        //   centerTitle: true,
+        // ),
         body: lstBOttomScreen[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -45,7 +45,7 @@ class _MyDashboardScreenState extends State<MyDashboardScreen> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.run_circle_sharp), label: 'Workout'),
-            BottomNavigationBarItem(icon: Icon(Icons.group_sharp), label: 'Group'),
+            BottomNavigationBarItem(icon: Icon(Icons.calculate_sharp), label: 'Calculator'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
           currentIndex: _selectedIndex,
