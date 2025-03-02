@@ -96,13 +96,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              // GestureDetector(
+              //   onTap: pickImage,
+              //   child: CircleAvatar(
+              //     radius: 40,
+              //     backgroundColor: Colors.grey[200],
+              //     backgroundImage: profileImage != null ? FileImage(profileImage!) : (apiImage != null && apiImage!.isNotEmpty ? NetworkImage('${APIEndPoints.mediaUrl}$apiImage') : null),
+              //     child: (profileImage == null && (apiImage == null || apiImage!.isEmpty)) ? const Icon(Icons.camera_alt, size: 40, color: Colors.grey) : null,
+              //   ),
+              // ),
               GestureDetector(
                 onTap: pickImage,
                 child: CircleAvatar(
                   radius: 40,
-                  backgroundColor: Colors.grey[200],
-                  backgroundImage: profileImage != null ? FileImage(profileImage!) : (apiImage != null && apiImage!.isNotEmpty ? NetworkImage('${APIEndPoints.mediaUrl}/$apiImage') : null),
-                  child: (profileImage == null && (apiImage == null || apiImage!.isEmpty)) ? const Icon(Icons.camera_alt, size: 40, color: Colors.grey) : null,
+                  backgroundColor: Colors.grey[100],
+                  backgroundImage: profileImage != null
+                      ? FileImage(profileImage!) // If local profile image is picked
+                      : (apiImage != null && apiImage!.isNotEmpty
+                          ? NetworkImage('${APIEndPoints.mediaUrl}$apiImage') // If API image is available
+                          : null),
+                  child: (profileImage == null && (apiImage == null || apiImage!.isEmpty))
+                      ? const Icon(Icons.camera_alt, size: 40, color: Colors.grey) // Default camera icon
+                      : null,
                 ),
               ),
               const SizedBox(height: 10),
