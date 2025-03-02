@@ -33,6 +33,7 @@ class _WorkOutScreenState extends State<WorkOutScreen> {
             child: Column(
               children: [
                 BodyPartDropdown(state: state),
+                DifficultyDropdown(state: state),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: state.isLoadingState

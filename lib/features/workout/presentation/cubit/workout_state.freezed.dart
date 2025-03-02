@@ -25,6 +25,7 @@ mixin _$WorkOutState {
   List<WorkOutEntity>? get workOutListIntial =>
       throw _privateConstructorUsedError;
   List<String> get workOutBodyPartsList => throw _privateConstructorUsedError;
+  List<String> get workOutLevelsList => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
 
   /// Create a copy of WorkOutState
@@ -47,6 +48,7 @@ abstract class $WorkOutStateCopyWith<$Res> {
       List<WorkOutEntity>? workOutList,
       List<WorkOutEntity>? workOutListIntial,
       List<String> workOutBodyPartsList,
+      List<String> workOutLevelsList,
       String? token});
 }
 
@@ -71,6 +73,7 @@ class _$WorkOutStateCopyWithImpl<$Res, $Val extends WorkOutState>
     Object? workOutList = freezed,
     Object? workOutListIntial = freezed,
     Object? workOutBodyPartsList = null,
+    Object? workOutLevelsList = null,
     Object? token = freezed,
   }) {
     return _then(_value.copyWith(
@@ -98,6 +101,10 @@ class _$WorkOutStateCopyWithImpl<$Res, $Val extends WorkOutState>
           ? _value.workOutBodyPartsList
           : workOutBodyPartsList // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      workOutLevelsList: null == workOutLevelsList
+          ? _value.workOutLevelsList
+          : workOutLevelsList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -121,6 +128,7 @@ abstract class _$$WorkOutStateImplCopyWith<$Res>
       List<WorkOutEntity>? workOutList,
       List<WorkOutEntity>? workOutListIntial,
       List<String> workOutBodyPartsList,
+      List<String> workOutLevelsList,
       String? token});
 }
 
@@ -143,6 +151,7 @@ class __$$WorkOutStateImplCopyWithImpl<$Res>
     Object? workOutList = freezed,
     Object? workOutListIntial = freezed,
     Object? workOutBodyPartsList = null,
+    Object? workOutLevelsList = null,
     Object? token = freezed,
   }) {
     return _then(_$WorkOutStateImpl(
@@ -170,6 +179,10 @@ class __$$WorkOutStateImplCopyWithImpl<$Res>
           ? _value._workOutBodyPartsList
           : workOutBodyPartsList // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      workOutLevelsList: null == workOutLevelsList
+          ? _value._workOutLevelsList
+          : workOutLevelsList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -188,10 +201,12 @@ class _$WorkOutStateImpl implements _WorkOutState {
       final List<WorkOutEntity>? workOutList,
       final List<WorkOutEntity>? workOutListIntial,
       final List<String> workOutBodyPartsList = const ['All'],
+      final List<String> workOutLevelsList = const ['All'],
       this.token})
       : _workOutList = workOutList,
         _workOutListIntial = workOutListIntial,
-        _workOutBodyPartsList = workOutBodyPartsList;
+        _workOutBodyPartsList = workOutBodyPartsList,
+        _workOutLevelsList = workOutLevelsList;
 
 // General states
   @override
@@ -237,12 +252,22 @@ class _$WorkOutStateImpl implements _WorkOutState {
     return EqualUnmodifiableListView(_workOutBodyPartsList);
   }
 
+  final List<String> _workOutLevelsList;
+  @override
+  @JsonKey()
+  List<String> get workOutLevelsList {
+    if (_workOutLevelsList is EqualUnmodifiableListView)
+      return _workOutLevelsList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_workOutLevelsList);
+  }
+
   @override
   final String? token;
 
   @override
   String toString() {
-    return 'WorkOutState(isLoadingState: $isLoadingState, isSuccessState: $isSuccessState, errorState: $errorState, workOutList: $workOutList, workOutListIntial: $workOutListIntial, workOutBodyPartsList: $workOutBodyPartsList, token: $token)';
+    return 'WorkOutState(isLoadingState: $isLoadingState, isSuccessState: $isSuccessState, errorState: $errorState, workOutList: $workOutList, workOutListIntial: $workOutListIntial, workOutBodyPartsList: $workOutBodyPartsList, workOutLevelsList: $workOutLevelsList, token: $token)';
   }
 
   @override
@@ -262,6 +287,8 @@ class _$WorkOutStateImpl implements _WorkOutState {
                 .equals(other._workOutListIntial, _workOutListIntial) &&
             const DeepCollectionEquality()
                 .equals(other._workOutBodyPartsList, _workOutBodyPartsList) &&
+            const DeepCollectionEquality()
+                .equals(other._workOutLevelsList, _workOutLevelsList) &&
             (identical(other.token, token) || other.token == token));
   }
 
@@ -274,6 +301,7 @@ class _$WorkOutStateImpl implements _WorkOutState {
       const DeepCollectionEquality().hash(_workOutList),
       const DeepCollectionEquality().hash(_workOutListIntial),
       const DeepCollectionEquality().hash(_workOutBodyPartsList),
+      const DeepCollectionEquality().hash(_workOutLevelsList),
       token);
 
   /// Create a copy of WorkOutState
@@ -293,6 +321,7 @@ abstract class _WorkOutState implements WorkOutState {
       final List<WorkOutEntity>? workOutList,
       final List<WorkOutEntity>? workOutListIntial,
       final List<String> workOutBodyPartsList,
+      final List<String> workOutLevelsList,
       final String? token}) = _$WorkOutStateImpl;
 
 // General states
@@ -309,6 +338,8 @@ abstract class _WorkOutState implements WorkOutState {
   List<WorkOutEntity>? get workOutListIntial;
   @override
   List<String> get workOutBodyPartsList;
+  @override
+  List<String> get workOutLevelsList;
   @override
   String? get token;
 
