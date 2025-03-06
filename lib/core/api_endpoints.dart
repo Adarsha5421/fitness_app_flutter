@@ -6,7 +6,7 @@ class APIEndPoints {
   // static String baseUrl = "http://192.168.1.71:5000/api/";
 
   // static String pointUrl = "http://192.168.42.9:5000/";
-  static String pointUrl = "http://192.168.1.71:5000/";
+  static String pointUrl = "http://192.168.178.225:5000/";
   static String baseUrl = "$pointUrl/api/";
   static String mediaUrl = "${pointUrl}uploads/";
   static String loginUrl = "auth/login";
